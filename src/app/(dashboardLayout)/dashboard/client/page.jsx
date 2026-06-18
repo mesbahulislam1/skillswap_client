@@ -1,6 +1,7 @@
 "use client";
 
-import { ListTodo } from "lucide-react";
+import { ListTodo, Plus } from "lucide-react";
+import Link from "next/link";
 
 export default function ClientDashboard() {
   return (
@@ -16,10 +17,10 @@ export default function ClientDashboard() {
           </p>
         </div>
 
-        <button className="flex items-center gap-2 bg-[#0090B5] text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-[#b45309]">
-          <span className="text-lg">＋</span>
-          Post New Task
-        </button>
+        <Link href={'/dashboard/client/tasks/new'} className="bg-[#2ea6bb] text-white flex items-center gap-1 rounded-full font-medium cursor-pointer text-[13px] px-5 py-1 h-fit">
+                  <Plus size={18} />
+                    Post New Task
+                  </Link>
       </div>
 
       {/* Stats */}

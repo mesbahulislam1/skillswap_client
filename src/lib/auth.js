@@ -21,23 +21,12 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
   },
-  hooks: {
-    afterCreate: async (user) => {
-      await db.collection("users").updateOne(
-        { id: user.id },
-        {
-          $set: {
-            role: "client",
-            isBlocked: false,
-          },
-        },
-      );
-    },
-  },
+  
   user: {
     additionalFields: {
       role: {
         type: "string",
+        defaultValue: 'client',
       },
       skill: {
         type: "string",

@@ -1,8 +1,12 @@
 "use client";
 
+import TaskCard from "@/components/TaskCard";
+import { getTasks } from "@/lib/api/tasks/data";
 import { Search, Plus, Calendar } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-const tasksData = [
+const tasksDatas = [
   {
     id: 1,
     title: "cl task",
@@ -25,16 +29,38 @@ const tasksData = [
   },
 ];
 
+
 export default function MyTasks() {
-  const getStatusStyle = (status) => {
-    if (status === "In Progress") return "bg-amber-50 text-amber-600";
-    if (status === "Completed") return "bg-green-50 text-green-600";
-    return "bg-blue-50 text-blue-600";
+ const [tasksData, setTasksData] = useState([]);
+
+  // const getStatusStyle = (status) => {
+  //   if (status === "In Progress") return "bg-amber-50 text-amber-600";
+  //   if (status === "Completed") return "bg-green-50 text-green-600";
+  //   return "bg-blue-50 text-blue-600";
+  // };
+
+
+const getTasks = async () => {
+    const res = await fetch("http://localhost:8080/api/tasks");
+    return res.json();
   };
 
+  useEffect(() => {
+    const loadTasks = async () => {
+      const data = await getTasks();
+      
+      setTasksData(data);
+    };
+
+    loadTasks();
+  }, []);
+
+  console.log(tasksData)
+  
+
   return (
-    <div className="min-h-screen bg-gray-50 p-6 sm:p-10">
-      <div className="max-w-8xl mx-auto">
+    <div className="min-h-screen w-full p-6 sm:p-10">
+      <div className="max-w-9xl mx-auto ">
         {/* HEADER */}
         <div className="flex flex-col sm:flex-row justify-between gap-4 mb-8">
           <div>
@@ -44,10 +70,13 @@ export default function MyTasks() {
             </p>
           </div>
 
-          <button className="flex items-center gap-2 bg-[#2ea6bb] text-white px-5 py-2.5 rounded-xl text-sm font-medium">
-            <Plus size={18} />
+          
+            
+          
+          <Link href={'/dashboard/client/tasks/new'} className="bg-[#2ea6bb] text-white flex items-center gap-1 rounded-full font-medium cursor-pointer text-[13px] px-5 py-1 h-fit">
+          <Plus size={18} />
             Post New Task
-          </button>
+          </Link>
         </div>
 
         {/* FILTERS */}
@@ -61,16 +90,16 @@ export default function MyTasks() {
             <input
               type="text"
               placeholder="Search tasks..."
-              className="w-full pl-11 pr-4 py-2.5 bg-white border rounded-xl text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+              className="w-full pl-11 pr-4 py-2.5 bg-white border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none"
             />
           </div>
 
-          <div className="flex gap-3">
-            <select className="px-4 py-2.5 border rounded-xl text-sm">
+          <div className="flex gap-3 ">
+            <select className="px-4 w-[150px] py-2.5 border rounded-xl text-sm">
               <option>All</option>
             </select>
 
-            <select className="px-4 py-2.5 border rounded-xl text-sm">
+            <select className="px-4 w-[150px] py-2.5 border rounded-xl text-sm">
               <option>All</option>
             </select>
           </div>
@@ -78,48 +107,8 @@ export default function MyTasks() {
 
         {/* GRID */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {tasksData.map((task) => (
-            <div
-              key={task.id}
-              className="bg-white border rounded-2xl p-6 shadow-sm hover:shadow-md transition"
-            >
-              {/* TOP */}
-              <div className="mb-5">
-                <div className="flex justify-between">
-                  <h3 className="font-semibold text-lg">{task.title}</h3>
-
-                  <span
-                    className={`px-3 py-1 text-xs rounded-full font-medium ${getStatusStyle(
-                      task.status,
-                    )}`}
-                  >
-                    {task.status}
-                  </span>
-                </div>
-
-                <p className="text-sm text-gray-400 mt-1">{task.description}</p>
-              </div>
-
-              {/* BOTTOM */}
-              <div className="flex justify-between items-center text-sm text-gray-500 border-t pt-4">
-                <div className="flex items-center gap-3">
-                  <span className="bg-gray-100 px-3 py-1 rounded-full text-xs">
-                    {task.category}
-                  </span>
-
-                  <span className="font-semibold text-gray-700">
-                    ${task.budget}
-                  </span>
-
-                  <span className="flex items-center gap-1">
-                    <Calendar size={14} />
-                    {task.dueDate}
-                  </span>
-                </div>
-
-                <span className="text-xs">{task.proposals} proposals</span>
-              </div>
-            </div>
+          {tasksData.map((task, index) => (
+            <TaskCard task={task} key={index}></TaskCard>
           ))}
         </div>
       </div>

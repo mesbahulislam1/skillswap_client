@@ -1,5 +1,6 @@
 "use client";
 
+import { addTasks } from "@/lib/api/tasks/actions";
 import {
   Button,
   Form,
@@ -7,9 +8,10 @@ import {
   Label,
   TextArea,
 } from "@heroui/react";
+import { redirect } from "next/navigation";
 
 export default function PostTaskForm() {
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -22,7 +24,11 @@ export default function PostTaskForm() {
       deadline: formData.get("deadline"),
     };
 
-    console.log(data);
+    console.log(data)
+    const res =await addTasks(data)
+    if(res){
+      redirect('/dashboard/client/tasks')
+    }
   };
 
   return (
