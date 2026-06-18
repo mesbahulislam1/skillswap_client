@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const FreelancerDashboard = () => {
   return (
-    <div className="pt-5 w-full pr-5">
+    <div className="pt-5 md:pt-0 w-full ">
       <div className="flex items-center justify-between ">
         <div>
           <h2 className="font-bold text-4xl">Freelancer Dashboard</h2>

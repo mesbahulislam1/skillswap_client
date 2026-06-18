@@ -8,14 +8,33 @@ const db = client.db("TaskHive");
 export const auth = betterAuth({
   database: mongodbAdapter(db, {
     // Optional: if you don't provide a client, database transactions won't be enabled.
-    client
+    client,
   }),
 
-  emailAndPassword: { 
-    enabled: true, 
-  }, 
+  emailAndPassword: {
+    enabled: true,
+  },
 
-    user: {
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    },
+  },
+  hooks: {
+    afterCreate: async (user) => {
+      await db.collection("users").updateOne(
+        { id: user.id },
+        {
+          $set: {
+            role: "client",
+            isBlocked: false,
+          },
+        },
+      );
+    },
+  },
+  user: {
     additionalFields: {
       role: {
         type: "string",
@@ -29,7 +48,10 @@ export const auth = betterAuth({
       hourlyRate: {
         type: "number",
       },
+      isBlocked: {
+        type: "boolean",
+        defaultValue: false,
+      },
     },
   },
-
 });

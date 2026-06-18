@@ -48,6 +48,12 @@ export default function LoginPage() {
     setIsLoading(false);
   };
 
+  const signIn = async () => {
+  const data = await authClient.signIn.social({
+    provider: "google",
+  });
+};
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-white to-slate-200 px-4">
       <Card className="w-full max-w-md shadow-2xl border border-gray-100 rounded-2xl">
@@ -68,7 +74,7 @@ export default function LoginPage() {
               Sign in to your TaskHive account
             </p>
 
-            <Button
+            <Button onClick={signIn}
               variant="outline"
               className={"w-full py-5 flex gap-2 rounded-[10px] mt-7 "}
             >
@@ -89,7 +95,7 @@ export default function LoginPage() {
           {/* FORM (SAFE VERSION) */}
           <Form onSubmit={handelSubmit} className="space-y-4">
             <TextField
-              isRequired
+              
               name="email"
               type="email"
               validate={(value) => {
@@ -106,7 +112,7 @@ export default function LoginPage() {
               />
               <FieldError />
             </TextField>
-            <TextField isRequired minLength={8} name="password" type="password">
+            <TextField  minLength={8} name="password" type="password">
               <Label>Password</Label>
               <Input
                 placeholder="*******"
