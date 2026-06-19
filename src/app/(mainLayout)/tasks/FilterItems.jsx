@@ -63,7 +63,7 @@ const FilterItems = () => {
         </Select.Popover>
       </Select>
 
-      <Button onClick={handleFilter} className={'grid-cols-1 w-full rounded-[7px]'}>Submit</Button>
+      <Button onClick={handleFilter} className={'grid-cols-1 w-full rounded-[7px]'}>Search</Button>
     </div>
   );
 };

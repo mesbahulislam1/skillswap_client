@@ -1,12 +1,13 @@
 import { DollarSign, Calendar, Clock, User, Send } from 'lucide-react';
 import TasksForm from './TasksForm';
 import { getTasksOne } from '@/lib/api/tasks/data';
+import { getUser } from '@/lib/api/user/session';
 
 const TaskDetails = async({params}) => {
   const {id} = await params;
-  
-  
   const task = await getTasksOne(id)
+ 
+  const user = await getUser()
  
   return (
     <div className="max-w-5xl mx-auto p-6 bg-[#fcfdfd] min-h-screen font-sans text-gray-800">
@@ -38,7 +39,9 @@ const TaskDetails = async({params}) => {
           </div>
 
           {/* Submit a Proposal Form */}
-          <TasksForm></TasksForm>
+          {
+            user?.role === 'client' ? <div></div>:<TasksForm></TasksForm> 
+          }
         </div>
 
         {/* Right Column: Meta Details Sidebar */}

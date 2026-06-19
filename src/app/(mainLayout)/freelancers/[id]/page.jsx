@@ -73,7 +73,7 @@ const FreelancerDetails = async ({ params }) => {
               {data?.skill?.split(",").map((skill, index)=>{
                 return <span
                   key={index}
-                  className="bg-gray-100/80 text-gray-700 text-xs font-medium px-3 py-1.5 rounded-full"
+                  className="bg-gray-100/80  capitalize text-gray-700 text-xs font-medium px-3 py-1.5 rounded-full"
                 >
                   {skill.trim()}
                 </span>

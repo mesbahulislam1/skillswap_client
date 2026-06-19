@@ -51,13 +51,13 @@ export default async function TopFreelancers() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 ">
-          {freelancers.map((freelancer) => (
+          {freelancers.slice(0,4).map((freelancer) => (
             <FreelancerUserCard key={freelancer?._id} freelancer={freelancer}></FreelancerUserCard>
           ))}
         </div>
 
         <div className="flex justify-center mt-10">
-            <Link href={'/'} className="block bg-gradient-to-r hover:text-cyan-600 text-center pb-3 font-medium from-cyan-400 to-blue-500 bg-clip-text flex items-center gap-2  hover:gap-3 transition-all text-transparent w-fit">View All Freelancers <FaArrowRight className="text-cyan-500"></FaArrowRight></Link>
+            <Link href={'/freelancers'} className="block bg-gradient-to-r hover:text-cyan-600 text-center pb-3 font-medium from-cyan-400 to-blue-500 bg-clip-text flex items-center gap-2  hover:gap-3 transition-all text-transparent w-fit">View All Freelancers <FaArrowRight className="text-cyan-500"></FaArrowRight></Link>
 
         </div>
       </div>

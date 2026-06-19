@@ -8,7 +8,7 @@ import Link from "next/link";
 const FreelancerUserCard = ({freelancer}) => {
 
   return (
-    <Link href={""}>
+    <Link href={`/freelancers/${freelancer?._id}`}>
     <motion.div
       whileHover={{
         y: -8,
@@ -38,7 +38,7 @@ const FreelancerUserCard = ({freelancer}) => {
         freelancer?.skill?.split(",").map(i=> {
           return  <motion.div key={i}
         whileHover={{ scale: 1.08 }}
-        className=" border border-green-100 bg-green-50 text-green-700 rounded-full px-3 py-1 text-[10px] font-medium"
+        className=" border border-green-100 bg-green-50 text-green-700 rounded-full px-3 capitalize py-1 text-[10px] font-medium"
       >
         {i}
       </motion.div>

@@ -60,12 +60,12 @@ export default function LoginPage() {
         <div className="p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <div className="flex items-center justify-center gap-3  transition-all cursor-pointer">
+            <Link href={'/'} className="flex items-center justify-center gap-3  transition-all cursor-pointer">
               <div className="p-2 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl hover:scale-105 ">
                 <MdOutlineWorkOutline className="w-6 h-6 text-white " />
               </div>
               <h1 className="text-2xl font-bold text-gray-900">TaskHive</h1>
-            </div>
+            </Link>
 
             <p className="text-black/90 mt-2 text-2xl font-bold">
               Welcome back

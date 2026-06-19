@@ -18,7 +18,7 @@ const TaskCard = ({ task }) => {
           </span>
         </div>
 
-        <p className="text-sm text-gray-400 mt-1">{task?.description}</p>
+        <p className="text-sm text-gray-400 mt-1 line-clamp-1">{task?.description}</p>
       </div>
 
       {/* BOTTOM */}

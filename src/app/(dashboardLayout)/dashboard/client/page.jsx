@@ -1,15 +1,24 @@
 "use client";
 
 import TaskCard from "@/components/TaskCard";
+import { authClient } from "@/lib/auth-client";
 import { ListTodo, Plus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function ClientDashboard() {
+  const { 
+        data: session, 
+        isPending, //loading state
+        error, //error object
+        refetch //refetch the session
+    } = authClient.useSession()
+    const user = session?.user; 
+
 
   const [tasksData, setTasksData] = useState([]);
   const getTasks = async () => {
-      const res = await fetch("http://localhost:8080/api/tasks");
+      const res = await fetch(`http://localhost:8080/api/tasks/total/${user?.email}`);
       return res.json();
     };
   
@@ -25,7 +34,7 @@ export default function ClientDashboard() {
 
  
   return (
-    <div className="max-w-6xl mx-auto p-6 font-sans text-[#1a1a1a]">
+    <div className="max-w-5xl mx-auto p-6 font-sans text-[#1a1a1a]">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-8">
         <div>
@@ -59,7 +68,7 @@ export default function ClientDashboard() {
       {
         tasksData ? <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {
-          tasksData.slice(0,4).map(task=>  {
+          tasksData.slice(0,2).map(task=>  {
             return <TaskCard task={task} key={task?._id}></TaskCard>
           })
         }

@@ -22,7 +22,7 @@ const MainTaskCard = ({task}) => {
         <h3 className="text-gray-900 font-bold text-lg leading-tight">
           {task?.title}
         </h3>
-        <p className="text-gray-400 text-sm">
+        <p className="text-gray-400 text-sm line-clamp-2">
           {task?.description}
         </p>
       </div>
