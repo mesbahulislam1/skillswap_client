@@ -8,7 +8,7 @@ const TaskDetails = async({params}) => {
   const task = await getTasksOne(id)
  
   const user = await getUser()
- 
+
   return (
     <div className="max-w-5xl mx-auto p-6 bg-[#fcfdfd] min-h-screen font-sans text-gray-800">
       {/* Top Badges */}
@@ -40,7 +40,7 @@ const TaskDetails = async({params}) => {
 
           {/* Submit a Proposal Form */}
           {
-            user?.role === 'client' ? <div></div>:<TasksForm></TasksForm> 
+            user?.role === 'client' ? <div></div>:<TasksForm user={user} task={task}></TasksForm> 
           }
         </div>
 
