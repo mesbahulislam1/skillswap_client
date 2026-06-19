@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { serverFetch } from "../server/server";
 
 export const getUser = async () => {
   const session = await auth.api.getSession({
@@ -9,3 +10,11 @@ export const getUser = async () => {
   return session?.user || null;
 };
 
+export const getFreelancerUser = async()=>{
+  const res = await serverFetch('/api/freelancers');
+  return res;
+}
+export const getFreelancerUserDetails = async(id)=>{
+  const res = await serverFetch(`/api/freelancers/${id}`);
+  return res;
+}

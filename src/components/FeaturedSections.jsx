@@ -1,40 +1,43 @@
-"use client";
 
 import Link from "next/link";
 import { FaArrowRight } from "react-icons/fa";
+import FreelancerUserCard from "./FreelancerUserCard";
+import { getFreelancerUser } from "@/lib/api/user/session";
 
-const freelancers = [
-  {
-    id: 1,
-    name: "freelancer user 3",
-    bio: "i am cool",
-    skills: ["python"],
-    rate: 29,
-  },
-  {
-    id: 2,
-    name: "freelancer user 2",
-    bio: "i am the best",
-    skills: ["Next js"],
-    rate: 40,
-  },
-  {
-    id: 3,
-    name: "freelancer user 1",
-    bio: "i am a good freelancer",
-    skills: ["React"],
-    rate: 50,
-  },
-  {
-    id: 4,
-    name: "shan",
-    bio: "i am good",
-    skills: ["react", "nodejs"],
-    rate: 20,
-  },
-];
+// const freelancers = [
+//   {
+//     id: 1,
+//     name: "freelancer user 3",
+//     bio: "i am cool",
+//     skills: ["python"],
+//     rate: 29,
+//   },
+//   {
+//     id: 2,
+//     name: "freelancer user 2",
+//     bio: "i am the best",
+//     skills: ["Next js"],
+//     rate: 40,
+//   },
+//   {
+//     id: 3,
+//     name: "freelancer user 1",
+//     bio: "i am a good freelancer",
+//     skills: ["React"],
+//     rate: 50,
+//   },
+//   {
+//     id: 4,
+//     name: "shan",
+//     bio: "i am good",
+//     skills: ["react", "nodejs"],
+//     rate: 20,
+//   },
+// ];
 
-export default function TopFreelancers() {
+export default async function TopFreelancers() {
+
+  const freelancers =await getFreelancerUser()
   return (
     <section className="py-20 bg-base-100">
       <div className="max-w-7xl mx-auto px-4">
@@ -47,45 +50,9 @@ export default function TopFreelancers() {
           </h2>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 ">
           {freelancers.map((freelancer) => (
-            <div
-              key={freelancer.id}
-              className="bg-base-200 rounded-2xl p-6 border border-base-300 hover:shadow-xl transition-all"
-            >
-              <div className="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold mb-4">
-                {freelancer.name.charAt(0).toUpperCase()}
-              </div>
-
-              <h3 className="font-bold text-lg">
-                {freelancer.name}
-              </h3>
-
-              <p className="text-sm text-gray-500 mt-2">
-                {freelancer.bio}
-              </p>
-
-              <div className="flex flex-wrap gap-2 mt-4">
-                {freelancer.skills.map((skill, index) => (
-                  <span
-                    key={index}
-                    className="badge badge-outline"
-                  >
-                    {skill}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-5 pt-4 border-t border-base-300 flex justify-between items-center">
-                <span className="font-bold text-primary">
-                  ${freelancer.rate}/hr
-                </span>
-
-                <button className="btn btn-sm btn-primary">
-                  Hire
-                </button>
-              </div>
-            </div>
+            <FreelancerUserCard key={freelancer?._id} freelancer={freelancer}></FreelancerUserCard>
           ))}
         </div>
 
