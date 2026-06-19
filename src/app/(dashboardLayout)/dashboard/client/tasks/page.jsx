@@ -1,10 +1,9 @@
-"use client";
-
+import FilterPanel from "@/components/FilterPanel";
 import TaskCard from "@/components/TaskCard";
 import { getTasks } from "@/lib/api/tasks/data";
 import { Search, Plus, Calendar } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+
 
 const tasksDatas = [
   {
@@ -30,32 +29,28 @@ const tasksDatas = [
 ];
 
 
-export default function MyTasks() {
- const [tasksData, setTasksData] = useState([]);
-
+export default async function MyTasks({searchParams}) {
+ 
+  
+  
   // const getStatusStyle = (status) => {
   //   if (status === "In Progress") return "bg-amber-50 text-amber-600";
   //   if (status === "Completed") return "bg-green-50 text-green-600";
   //   return "bg-blue-50 text-blue-600";
   // };
 
+  
+  const sParams = await searchParams;
+  const params = new URLSearchParams()
 
-const getTasks = async () => {
-    const res = await fetch("http://localhost:8080/api/tasks");
-    return res.json();
-  };
+  if (sParams?.search) {
+    params.set('search', sParams?.search)
+  }
+  if (sParams?.category) {
+    params.set('category', sParams?.category)
+  }
 
-  useEffect(() => {
-    const loadTasks = async () => {
-      const data = await getTasks();
-      
-      setTasksData(data);
-    };
-
-    loadTasks();
-  }, []);
-
-  console.log(tasksData)
+  const tasksData = await getTasks(params)
   
 
   return (
@@ -70,9 +65,6 @@ const getTasks = async () => {
             </p>
           </div>
 
-          
-            
-          
           <Link href={'/dashboard/client/tasks/new'} className="bg-[#2ea6bb] text-white flex items-center gap-1 rounded-full font-medium cursor-pointer text-[13px] px-5 py-1 h-fit">
           <Plus size={18} />
             Post New Task
@@ -81,36 +73,22 @@ const getTasks = async () => {
 
         {/* FILTERS */}
         <div className="flex flex-col md:flex-row gap-3 mb-8">
-          <div className="relative flex-1 max-w-md">
-            <Search
-              size={18}
-              className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-            />
+          
 
-            <input
-              type="text"
-              placeholder="Search tasks..."
-              className="w-full pl-11 pr-4 py-2.5 bg-white border rounded-xl text-sm focus:ring-2 focus:ring-blue-500 outline-none"
-            />
-          </div>
-
-          <div className="flex gap-3 ">
-            <select className="px-4 w-[150px] py-2.5 border rounded-xl text-sm">
-              <option>All</option>
-            </select>
-
-            <select className="px-4 w-[150px] py-2.5 border rounded-xl text-sm">
-              <option>All</option>
-            </select>
-          </div>
+          <FilterPanel></FilterPanel>
         </div>
 
         {/* GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {
+          tasksData.length <= 0 ? <div className=" text-3xl font-semibold text-gray-500 text-center pt-20">
+            Tasks Not Founds
+          </div> : <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {tasksData.map((task, index) => (
             <TaskCard task={task} key={index}></TaskCard>
           ))}
         </div>
+        }
+        
       </div>
     </div>
   );

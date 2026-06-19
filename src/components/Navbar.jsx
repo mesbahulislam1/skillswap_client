@@ -78,7 +78,7 @@ export function Navbar() {
             {user ? (
               <>
                 <Link
-                  href="/dashboard/client"
+                  href={user?.role =='client' && '/dashboard/client' || user?.role == 'freelancer' && '/dashboard/freelancer'}
                   className="font-semibold text-sm flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors"
                 >
                   <MdOutlineDashboard className="text-[18px]" />
@@ -160,10 +160,20 @@ export function Navbar() {
           </Link>
           <div className="pt-4 border-t border-border mt-4">
             {user ? (
-              <div className="flex flex-col gap-2">
+              
+              <div>
+                <Link
+                  href="/dashboard/client"
+                  className="font-semibold mb-6 text-sm flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors"
+                >
+                  <MdOutlineDashboard className="text-[18px]" />
+                  Dashboard
+                </Link>
+                <div className="flex flex-col gap-2">
                 <button onClick={handelLogout} className="block cursor-pointer w-full text-left px-4 py-3 text-base font-medium text-red-500 hover:bg-red-50 rounded-xl">
                   Log Out
                 </button>
+              </div>
               </div>
             ): (
               <div className="grid grid-cols-2 gap-4">

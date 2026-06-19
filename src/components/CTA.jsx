@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function CTA() {
   return (
-    <section className="py-18 w-[1000px] bg-gradient-to-r from-cyan-400/10 rounded-2xl border border-cyan-300 to-blue-500/10 ">
+    <section className="py-18  px-9 sm:px-15 md:px-20 bg-gradient-to-r from-cyan-400/10 rounded-2xl border border-cyan-300 to-blue-500/10 ">
       <div className="  text-center">
 
         <motion.h2

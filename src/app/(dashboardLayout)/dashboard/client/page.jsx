@@ -1,9 +1,29 @@
 "use client";
 
+import TaskCard from "@/components/TaskCard";
 import { ListTodo, Plus } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function ClientDashboard() {
+
+  const [tasksData, setTasksData] = useState([]);
+  const getTasks = async () => {
+      const res = await fetch("http://localhost:8080/api/tasks");
+      return res.json();
+    };
+  
+    useEffect(() => {
+      const loadTasks = async () => {
+        const data = await getTasks();
+        
+        setTasksData(data);
+      };
+  
+      loadTasks();
+    }, []);
+
+ 
   return (
     <div className="max-w-6xl mx-auto p-6 font-sans text-[#1a1a1a]">
       {/* Header */}
@@ -17,15 +37,18 @@ export default function ClientDashboard() {
           </p>
         </div>
 
-        <Link href={'/dashboard/client/tasks/new'} className="bg-[#2ea6bb] text-white flex items-center gap-1 rounded-full font-medium cursor-pointer text-[13px] px-5 py-1 h-fit">
-                  <Plus size={18} />
-                    Post New Task
-                  </Link>
+        <Link
+          href={"/dashboard/client/tasks/new"}
+          className="bg-[#2ea6bb] text-white flex items-center gap-1 rounded-full font-medium cursor-pointer text-[13px] px-5 py-1 h-fit"
+        >
+          <Plus size={18} />
+          Post New Task
+        </Link>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-        <Card title="Total Tasks" value="0" desc="All tasks created" />
+        <Card title="Total Tasks" value={tasksData?.length} desc="All tasks created" />
         <Card title="Open Tasks" value="0" desc="Awaiting proposals" />
         <Card title="In Progress" value="0" desc="Currently being worked on" />
         <Card title="Total Spent" value="$0" desc="Total money paid" />
@@ -33,8 +56,14 @@ export default function ClientDashboard() {
 
       {/* Recent Tasks */}
       <h2 className="text-lg font-semibold mb-4">Recent Tasks</h2>
-
-      <div className="border border-dashed border-[#e4e4e7] rounded-2xl p-12 text-center">
+      {
+        tasksData ? <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {
+          tasksData.slice(0,4).map(task=>  {
+            return <TaskCard task={task} key={task?._id}></TaskCard>
+          })
+        }
+      </div> : <div className="border border-dashed border-[#e4e4e7] rounded-2xl p-12 text-center">
         <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#f4f4f5] flex items-center justify-center">
           📋
         </div>
@@ -47,7 +76,10 @@ export default function ClientDashboard() {
         <button className="bg-[#d97706] text-white px-5 py-2 rounded-xl text-sm hover:bg-[#b45309]">
           Post a Task
         </button>
-      </div>
+      </div> 
+      
+        
+      }
     </div>
   );
 }

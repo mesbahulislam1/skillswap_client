@@ -24,7 +24,7 @@ const TaskCard = ({ task }) => {
       {/* BOTTOM */}
       <div className="flex justify-between items-center text-sm text-gray-500 border-t pt-4">
         <div className="flex items-center gap-3">
-          <span className="bg-gray-100 px-3 py-1 rounded-full text-xs">
+          <span className="bg-gray-100 capitalize px-3 py-1 rounded-full text-xs">
             {task?.category}
           </span>
 

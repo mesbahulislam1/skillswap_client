@@ -1,6 +1,7 @@
 "use client";
 
 import { addTasks } from "@/lib/api/tasks/actions";
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Form,
@@ -9,8 +10,13 @@ import {
   TextArea,
 } from "@heroui/react";
 import { redirect } from "next/navigation";
+import { toast } from "react-toastify";
 
 export default function PostTaskForm() {
+  const {data: session } = authClient.useSession()
+  const user = session?.user;
+
+
   const handleSubmit = async(e) => {
     e.preventDefault();
 
@@ -22,11 +28,12 @@ export default function PostTaskForm() {
       description: formData.get("description"),
       budget: formData.get("budget"),
       deadline: formData.get("deadline"),
+      clientEmail: user?.email,
     };
 
-    console.log(data)
     const res =await addTasks(data)
     if(res){
+      toast.success('New Tasks Added Successful')
       redirect('/dashboard/client/tasks')
     }
   };

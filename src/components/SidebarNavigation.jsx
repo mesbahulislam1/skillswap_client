@@ -16,6 +16,7 @@ import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import Image from "next/image";
 import { FaArrowLeft } from "react-icons/fa";
+import { VscFolderActive } from "react-icons/vsc";
 
 export default function SidebarNavigation() {
   const pathname = usePathname();
@@ -78,7 +79,7 @@ export default function SidebarNavigation() {
       {
         name: "Active Projects",
         href: "/dashboard/freelancer/projects",
-        icon: CircleDollarSign,
+        icon: VscFolderActive,
       },
       {
         name: "Earnings",
@@ -90,6 +91,8 @@ export default function SidebarNavigation() {
         href: "/dashboard/freelancer/profile",
         icon: User,
       },
+      
+
     ],
 
     admin: [
@@ -151,6 +154,7 @@ export default function SidebarNavigation() {
         transition-transform duration-300
         ${isOpen ? "translate-x-0" : "-translate-x-full"}
         md:translate-x-0
+    
       `}
       >
         {/* Header */}
@@ -216,7 +220,7 @@ export default function SidebarNavigation() {
                 href={item.href}
                 onClick={() => setIsOpen(false)}
                 className={`
-                  flex items-center gap-3 px-4 py-3 rounded-xl
+                  flex items-center gap-3 px-4 py-1.5 rounded-xl
                   transition-all duration-200
                   ${
                     isActive
