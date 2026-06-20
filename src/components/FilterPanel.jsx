@@ -7,6 +7,9 @@ import React, { useState } from "react";
 const FilterPanel = () => {
   const [category, setCategory] = useState();
   const [search, setSearch] = useState();
+  const [status, setStatus] = useState();
+
+  console.log(status)
   
  const router = useRouter()
   const handelApplyFilter = async () => {
@@ -17,6 +20,9 @@ const FilterPanel = () => {
     }
     if (category) {
       params.set('category',category)
+    }
+    if(status){
+      params.set('status', status)
     }
 
     router.push(`/dashboard/client/tasks?${params.toString()}`)
@@ -40,14 +46,14 @@ const FilterPanel = () => {
       </div>
 
       <select
-        onChange={(e) => setCategory(e.target.value)}
+        onChange={(e) => setStatus(e.target.value)}
         name="category"
         required
         className="w-full px-4 py-3 bg-[#f4f4f5] border border-[#e4e4e7] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#d97706] focus:bg-white"
       >
         <option value="">All Status</option>
         <option value="open">Open</option>
-        <option value="inprogress">In Progress</option>
+        <option value="in progress">In Progress</option>
         <option value="completed">Completed </option>
         
       </select>

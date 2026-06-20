@@ -29,6 +29,7 @@ export default function PostTaskForm() {
       budget: formData.get("budget"),
       deadline: formData.get("deadline"),
       clientEmail: user?.email,
+      status: 'open',
     };
 
     const res =await addTasks(data)

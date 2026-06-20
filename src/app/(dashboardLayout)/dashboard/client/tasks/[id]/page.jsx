@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { Button, Input, Label, TextArea } from '@heroui/react';
 import { TasksModal } from '@/components/TasksModal';
 import { DeleteTask } from '@/components/DeleteTask';
+import { baseUrl } from '@/lib/baseUrl';
+import FreelancerProposalCard from '@/components/ProposalCard';
 
 const TaskDetailsPage = async({params}) => {
   const {id} = await params;
@@ -21,7 +23,10 @@ const TaskDetailsPage = async({params}) => {
 //   };
 
   const task = await getTasksOne(id)
-
+  
+  const res = await fetch(`${baseUrl}/api/proposals/${task?._id}`)
+  const taskData = await res.json()
+  
   return (
     <div className="w-[70%] mx-auto  p-6 bg-white min-h-screen font-sans text-slate-800">
       
@@ -39,11 +44,13 @@ const TaskDetailsPage = async({params}) => {
       <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm mb-6">
         {/* Meta Badges & Info Row */}
         <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500 mb-5">
-          <span className="px-3 py-1 bg-blue-50 text-blue-600 font-medium rounded-full text-xs border border-blue-100">
-           status
+          <span
+            className={`px-3 capitalize py-1 ${task?.status ==='in progress' && ' border-[#FE9C06] text-[#FE9C06]  bg-[#FE9C06]/9' } ${task?.status ==='open' && ' bg-cyan-500/8 text-cyan-500' }  text-xs border rounded-full font-medium `}
+          >
+            {task?.status}
           </span>
           
-          <span className="px-3 py-1 bg-slate-100 text-slate-700 font-medium rounded-full text-xs">
+          <span className="px-3 capitalize py-1 bg-slate-100 text-slate-700 font-medium rounded-full text-xs">
             {task?.category}
           </span>
           
@@ -81,14 +88,14 @@ const TaskDetailsPage = async({params}) => {
       {/* Proposals Section Card */}
       <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
         <h2 className="text-base font-bold text-slate-900 mb-4">
-          Proposals ({task.proposalsCount})
+          Proposals ({task?.proposalCount || 0})
         </h2>
         
-        {task.proposalsCount === 0 && (
-          <p className="text-sm text-slate-400 font-normal">
-            No proposals yet. Freelancers will apply soon!
-          </p>
-        )}
+        {
+          taskData.map(Tasks=>{
+            return <FreelancerProposalCard key={Tasks?._id} task={Tasks}></FreelancerProposalCard>
+          })
+        }
       </div>
 
     </div>

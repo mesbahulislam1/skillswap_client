@@ -17,9 +17,10 @@ const FreelancerDetails = async ({ params }) => {
 
         {/* Name and Meta Stats */}
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 tracking-tight mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 tracking-tight ">
             {data?.name}
           </h1>
+          <span className="font-medium text-gray-600 tracking-tight mb-2">{data?.email}</span>
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-gray-500 text-sm font-medium">
             <div className="flex items-center gap-1.5">
               <Briefcase className="w-4 h-4" />

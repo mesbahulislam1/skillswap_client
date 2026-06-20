@@ -13,12 +13,14 @@ const TaskDetails = async({params}) => {
     <div className="max-w-5xl mx-auto p-6 bg-[#fcfdfd] min-h-screen font-sans text-gray-800">
       {/* Top Badges */}
       <div className="flex gap-2 mb-4">
-        <span className="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
-          Writing
+        <span className="px-3 capitalize py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium border">
+          {task?.category}
         </span>
-        <span className="px-3 py-1 bg-[#e6f7f0] text-[#20c997] rounded-full text-xs font-medium">
-          open
-        </span>
+        <span
+            className={`px-3 capitalize border ${task?.status ==='in progress' && 'border-[#FE9C06] text-[#FE9C06] bg-[#FE9C06]/9' } ${task?.status ==='open' && 'border-[#067afe] text-[#067afe] bg-[#067afe]/15' } py-1  text-xs rounded-full font-medium `}
+          >
+            {task?.status}
+          </span>
       </div>
 
       {/* Task Title */}

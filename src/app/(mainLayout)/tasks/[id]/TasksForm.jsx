@@ -25,12 +25,13 @@ const TasksForm = ({ user, task }) => {
     e.preventDefault();
 
     const formData = {
+      taskTitle: task?.title,
       proposedBudget,
       estimatedDays,
       coverNote,
       freelancerEmail: user?.email,
       freelancerName: user?.name,
-
+      taskBudget: task?.budget,
       taskId: task?._id,
       status: "pending",
     };

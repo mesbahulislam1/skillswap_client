@@ -12,9 +12,9 @@ const TaskCard = ({ task }) => {
           <h3 className="font-semibold text-lg">{task?.title}</h3>
 
           <span
-            className={`px-3 py-1 bg-cyan-500/10 text-cyan-700 text-xs rounded-full font-medium `}
+            className={`px-3 capitalize py-1 ${task?.status ==='in progress' && ' border-[#FE9C06] text-[#FE9C06]  bg-[#FE9C06]/9' } ${task?.status ==='open' && ' bg-cyan-500/8 text-cyan-500' }  text-xs border rounded-full font-medium `}
           >
-            Status
+            {task?.status}
           </span>
         </div>
 
@@ -36,7 +36,7 @@ const TaskCard = ({ task }) => {
           </span>
         </div>
 
-        <span className="text-xs"> proposals</span>
+        <span className="text-xs">{task?.proposalCount || 0} proposals</span>
       </div>
     </div>
     </Link>

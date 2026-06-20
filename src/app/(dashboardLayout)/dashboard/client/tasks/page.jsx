@@ -82,7 +82,7 @@ export default async function MyTasks({searchParams}) {
         {
           tasksData.length <= 0 ? <div className=" text-3xl font-semibold text-gray-500 text-center pt-20">
             Tasks Not Founds
-          </div> : <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          </div> : <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {tasksData.map((task, index) => (
             <TaskCard task={task} key={index}></TaskCard>
           ))}
