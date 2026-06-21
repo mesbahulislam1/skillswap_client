@@ -41,14 +41,15 @@ const handleAccept = async () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        status: "in process",
+        status: "accepted",
       }),
     });
 
    
 
     if (res.ok) {
-      setStatus("in process");
+      setStatus("accepted");
+      window.location.reload()
     }
   } catch (error) {
     console.log("ERROR:", error);
@@ -79,7 +80,7 @@ const handleAccept = async () => {
         </div>
 
         {/* Dynamic Status Badge */}
-        <span className={`${ task?.status === 'pending' && 'border-[#FE9C06] text-[#FE9C06]  bg-[#FE9C06]/9'} border capitalize rounded-full px-5 py-1`}>
+        <span className={`${ task?.status === 'pending' && 'border-[#FE9C06] text-[#FE9C06]  bg-[#FE9C06]/9'} ${ task?.status === 'accepted' && 'border-[#01a74c] text-[#01a74c]  bg-[#01a74c]/9'}  ${ task?.status === 'rejected' && 'border-[#ff0000] text-[#ff0000]  bg-[#ff0000]/9'}  text-sm font-medium border capitalize rounded-full px-5 py-1`}>
   {task?.status}
 </span>
       </div>
@@ -99,14 +100,14 @@ const handleAccept = async () => {
 
       {/* Third Row: Proposal Message Description */}
       <div className="text-gray-600 text-sm mb-6 ml-7 break-words">
-        {task?.description}
+        {task?.coverNote}
       </div>
 
       {/* Fourth Row: Action Buttons */}
       {task?.status === 'pending' && (
         <div className="flex gap-3 ml-7">
           <button
-            onClick={()=>handleAccept('in process')}
+            onClick={()=>handleAccept('accept')}
             className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg text-sm transition-colors duration-200"
           >
             Accept

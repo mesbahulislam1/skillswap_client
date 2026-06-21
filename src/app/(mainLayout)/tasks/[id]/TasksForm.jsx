@@ -15,12 +15,15 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
 const TasksForm = ({ user, task }) => {
+
   const [proposedBudget, setProposedBudget] = useState("");
   const [estimatedDays, setEstimatedDays] = useState("");
   const [coverNote, setCoverNote] = useState("");
 
   const [alreadyApplied, setAlreadyApplied] = useState(false);
   const router = useRouter()
+
+  console.log(task)
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -30,10 +33,13 @@ const TasksForm = ({ user, task }) => {
       estimatedDays,
       coverNote,
       freelancerEmail: user?.email,
+      clientEmail: task?.clientEmail,
       freelancerName: user?.name,
       taskBudget: task?.budget,
       taskId: task?._id,
+      taskCategory: task?.category,
       status: "pending",
+
     };
 
     const res = await proposalMutation(formData);

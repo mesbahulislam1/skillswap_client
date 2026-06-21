@@ -23,14 +23,18 @@ export default function ClientDashboard() {
     };
   
     useEffect(() => {
-      const loadTasks = async () => {
-        const data = await getTasks();
-        
-        setTasksData(data);
-      };
-  
-      loadTasks();
-    }, []);
+  if (!user?.email) return;
+
+  const loadTasks = async () => {
+    const res = await fetch(
+      `http://localhost:8080/api/tasks/total/${user.email}`
+    );
+    const data = await res.json();
+    setTasksData(data);
+  };
+
+  loadTasks();
+}, [user?.email]);
 
  
   return (

@@ -49,6 +49,9 @@ export default async function MyTasks({searchParams}) {
   if (sParams?.category) {
     params.set('category', sParams?.category)
   }
+  if (sParams?.status) {
+    params.set('status', sParams?.status)
+  }
 
   const tasksData = await getTasks(params)
   

@@ -6,3 +6,9 @@ export const proposalMutation = async(data)=>{
 
     return res
 }
+
+export const proposalUpdate = async(id, data)=>{
+    const res = await serverMutation(`/api/manage-proposal-accepted/${id}`, 'PATCH', data)
+
+    return res
+}

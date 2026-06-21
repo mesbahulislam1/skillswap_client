@@ -19,6 +19,7 @@ const FilterItems = () => {
     if (category && category !== "all") {
       params.set("category", category);
     }
+    
 
     router.push(`/tasks?${params.toString()}`);
   };

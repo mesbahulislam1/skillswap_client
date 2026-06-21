@@ -26,7 +26,7 @@ const FilterPanel = () => {
     }
 
     router.push(`/dashboard/client/tasks?${params.toString()}`)
-    console.log(params.toString())
+    
   };
 
   return (
