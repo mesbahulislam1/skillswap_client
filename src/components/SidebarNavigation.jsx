@@ -120,6 +120,7 @@ export default function SidebarNavigation() {
   };
 
   const menu = menus[user?.role || "client"];
+  // const menu = menus.admin;
 
   return (
     <>

@@ -9,7 +9,6 @@ const FilterPanel = () => {
   const [search, setSearch] = useState();
   const [status, setStatus] = useState();
 
-  console.log(status)
   
  const router = useRouter()
   const handelApplyFilter = async () => {

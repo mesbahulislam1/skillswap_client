@@ -1,5 +1,4 @@
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import { serverFetch } from "../server/server";
 
 export const getUser = async () => {
@@ -18,3 +17,10 @@ export const getFreelancerUserDetails = async(id)=>{
   const res = await serverFetch(`/api/freelancers/${id}`);
   return res;
 }
+
+export const getAllUsers =async(query)=>{
+  const res = await serverFetch(`/api/admin/users?${query}`);
+  return res
+}
+
+
