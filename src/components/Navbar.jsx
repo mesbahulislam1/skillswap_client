@@ -26,12 +26,10 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-
-  const handelLogout = async()=>{
-    await authClient.signOut()
-    window.location.reload()
-    
-  }
+  const handelLogout = async () => {
+    await authClient.signOut();
+    window.location.reload();
+  };
   return (
     <nav
       className={`sticky top-0 w-full z-50 transition-all duration-300 ${
@@ -78,7 +76,11 @@ export function Navbar() {
             {user ? (
               <>
                 <Link
-                  href={user?.role =='client' && '/dashboard/client' || user?.role == 'freelancer' && '/dashboard/freelancer'}
+                  href={
+                    (user?.role == "client" && "/dashboard/client") ||
+                    (user?.role == "freelancer" && "/dashboard/freelancer") ||
+                    (user?.role == "admin" && "/dashboard/admin")
+                  }
                   className="font-semibold text-sm flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors"
                 >
                   <MdOutlineDashboard className="text-[18px]" />
@@ -99,7 +101,10 @@ export function Navbar() {
                     />
                   </div>
                 </div>
-                <HiOutlineLogout onClick={handelLogout} className="text-2xl cursor-pointer" />
+                <HiOutlineLogout
+                  onClick={handelLogout}
+                  className="text-2xl cursor-pointer"
+                />
               </>
             ) : (
               <div className="flex items-center gap-3">
@@ -160,7 +165,6 @@ export function Navbar() {
           </Link>
           <div className="pt-4 border-t border-border mt-4">
             {user ? (
-              
               <div>
                 <Link
                   href="/dashboard/client"
@@ -170,12 +174,15 @@ export function Navbar() {
                   Dashboard
                 </Link>
                 <div className="flex flex-col gap-2">
-                <button onClick={handelLogout} className="block cursor-pointer w-full text-left px-4 py-3 text-base font-medium text-red-500 hover:bg-red-50 rounded-xl">
-                  Log Out
-                </button>
+                  <button
+                    onClick={handelLogout}
+                    className="block cursor-pointer w-full text-left px-4 py-3 text-base font-medium text-red-500 hover:bg-red-50 rounded-xl"
+                  >
+                    Log Out
+                  </button>
+                </div>
               </div>
-              </div>
-            ): (
+            ) : (
               <div className="grid grid-cols-2 gap-4">
                 <Link
                   href="/signin"
@@ -192,8 +199,7 @@ export function Navbar() {
                   Get Started
                 </Link>
               </div>
-            ) 
-          }
+            )}
           </div>
         </div>
       )}

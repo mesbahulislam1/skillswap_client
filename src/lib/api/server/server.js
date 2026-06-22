@@ -1,5 +1,7 @@
 import { baseUrl } from "@/lib/baseUrl";
 
+
+
 export const serverMutation = async (path, method, data) => {
   const res = await fetch(`${baseUrl}${path}`, {
     method: method,
@@ -33,6 +35,8 @@ export const serverFetch = async (path) => {
 };
 
 export const fetchOne = async (path) => {
+  
+
   const res = await fetch(`${baseUrl}${path}`);
 
   return res.json();

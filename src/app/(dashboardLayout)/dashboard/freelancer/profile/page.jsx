@@ -54,7 +54,7 @@ export default function ProfilePage() {
 
   const user = session?.user;
 
-  console.log(user);
+
 
   return (
     <div className="min-h-screen bg-slate-100">

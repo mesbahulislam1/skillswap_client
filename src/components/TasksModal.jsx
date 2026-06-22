@@ -35,7 +35,7 @@ export function TasksModal({ task }) {
     };
 
     const res = await updateTasks(task?._id, data);
-    console.log(res);
+
     if (res) {
       toast.success('Tasks Update successful')
       redirect('/dashboard/client/tasks')

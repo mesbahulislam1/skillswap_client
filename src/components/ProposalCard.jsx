@@ -56,6 +56,28 @@ const handleAccept = async () => {
   }
 };
 
+
+const payments= async()=>{
+
+  const priceData = {
+    proposedBudget: task?.proposedBudget,
+  }
+  const res = await fetch("/api/checkout_sessions", {
+    method: 'POST',
+    headers: {
+       "Content-Type": "application/json",
+    },
+    body: JSON.stringify(priceData)
+  })
+   const data = await res.json()
+   if (data?.url) {
+    window.location.href = data.url,
+    handleAccept('accept')
+   }
+  
+   
+}
+
   return (
     <div className="max-w-4xl mx-auto my-6 p-6 bg-white border border-gray-100 rounded-xl shadow-sm font-sans">
       {/* Top Row: User details and Status badge */}
@@ -107,7 +129,7 @@ const handleAccept = async () => {
       {task?.status === 'pending' && (
         <div className="flex gap-3 ml-7">
           <button
-            onClick={()=>handleAccept('accept')}
+            onClick={payments}
             className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg text-sm transition-colors duration-200"
           >
             Accept

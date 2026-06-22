@@ -1,13 +1,13 @@
-import { DollarSign, Calendar, Clock, User, Send } from 'lucide-react';
-import TasksForm from './TasksForm';
-import { getTasksOne } from '@/lib/api/tasks/data';
-import { getUser } from '@/lib/api/user/session';
+import { DollarSign, Calendar, Clock, User, Send } from "lucide-react";
+import TasksForm from "./TasksForm";
+import { getTasksOne } from "@/lib/api/tasks/data";
+import { getUser } from "@/lib/api/user/session";
 
-const TaskDetails = async({params}) => {
-  const {id} = await params;
-  const task = await getTasksOne(id)
- 
-  const user = await getUser()
+const TaskDetails = async ({ params }) => {
+  const { id } = await params;
+  const task = await getTasksOne(id);
+
+  const user = await getUser();
 
   return (
     <div className="max-w-5xl mx-auto p-6 bg-[#fcfdfd] min-h-screen font-sans text-gray-800">
@@ -17,10 +17,10 @@ const TaskDetails = async({params}) => {
           {task?.category}
         </span>
         <span
-            className={`px-3 capitalize border ${task?.status ==='in progress' && 'border-[#FE9C06] text-[#FE9C06] bg-[#FE9C06]/9' } ${task?.status ==='open' && 'border-[#067afe] text-[#067afe] bg-[#067afe]/15' } py-1  text-xs rounded-full font-medium `}
-          >
-            {task?.status}
-          </span>
+          className={`px-3 capitalize border ${task?.status === "in progress" && "border-[#FE9C06] text-[#FE9C06] bg-[#FE9C06]/9"} ${task?.status === "open" && "border-[#067afe] text-[#067afe] bg-[#067afe]/15"} py-1  text-xs rounded-full font-medium `}
+        >
+          {task?.status}
+        </span>
       </div>
 
       {/* Task Title */}
@@ -28,27 +28,28 @@ const TaskDetails = async({params}) => {
 
       {/* Main Grid Layout */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
         {/* Left Column: Description & Proposal Form */}
         <div className="md:col-span-2 space-y-6">
-          
           {/* Description Section */}
           <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
-            <h2 className="text-lg font-bold mb-4 text-gray-900">Description</h2>
+            <h2 className="text-lg font-bold mb-4 text-gray-900">
+              Description
+            </h2>
             <p className="text-gray-400 text-sm leading-relaxed">
               {task?.description}
             </p>
           </div>
 
           {/* Submit a Proposal Form */}
-          {
-            user?.role === 'client' ? <div></div>:<TasksForm user={user} task={task}></TasksForm> 
-          }
+          {user?.role === "client" ? (
+            <div></div>
+          ) : (
+            <TasksForm user={user} task={task}></TasksForm>
+          )}
         </div>
 
         {/* Right Column: Meta Details Sidebar */}
         <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm h-fit space-y-6">
-          
           {/* Budget */}
           <div className="flex items-start gap-4">
             <div className="p-2 bg-amber-50 rounded-lg">
@@ -56,7 +57,9 @@ const TaskDetails = async({params}) => {
             </div>
             <div>
               <p className="text-xs text-gray-400 font-medium">Budget</p>
-              <p className="text-xl font-bold text-[#06abdd]">${task?.budget}</p>
+              <p className="text-xl font-bold text-[#06abdd]">
+                ${task?.budget}
+              </p>
             </div>
           </div>
 
@@ -67,7 +70,9 @@ const TaskDetails = async({params}) => {
             </div>
             <div>
               <p className="text-xs text-gray-400 font-medium">Deadline</p>
-              <p className="text-sm font-semibold text-gray-800">{task?.deadline}</p>
+              <p className="text-sm font-semibold text-gray-800">
+                {task?.deadline}
+              </p>
             </div>
           </div>
 
@@ -78,13 +83,13 @@ const TaskDetails = async({params}) => {
             </div>
             <div>
               <p className="text-xs text-gray-400 font-medium">Posted</p>
-             <p className="text-sm font-semibold text-gray-800">
-  {new Date(task?.postedDate).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  })}
-</p>
+              <p className="text-sm font-semibold text-gray-800">
+                {new Date(task?.postedDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </p>
             </div>
           </div>
 
@@ -100,9 +105,7 @@ const TaskDetails = async({params}) => {
               </p>
             </div>
           </div>
-
         </div>
-
       </div>
     </div>
   );

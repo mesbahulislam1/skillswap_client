@@ -59,7 +59,7 @@ export default function HeroSection() {
               className="mt-10 flex flex-col justify-center gap-4 sm:flex-row lg:justify-start"
             >
               <Link
-                href="/dashboard/add-task"
+                href="/dashboard/client/tasks/new"
                 className="group flex items-center justify-center text-white gap-2 rounded-xl bg-cyan-500 px-8 py-4 font-semibold text-slate-950 transition-all duration-300 hover:scale-105 hover:bg-cyan-400"
               >
                 Post a Task

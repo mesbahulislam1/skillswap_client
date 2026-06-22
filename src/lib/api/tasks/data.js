@@ -13,4 +13,15 @@ export const getTasks = async(params)=>{
     return res;
    
 }
+export const TotalTasks = async()=>{
+    const res = await serverFetch(`/api/tasks`)
+    return res;
+   
+}
+
+export const TotalIprocess = async()=>{
+    const res = await serverFetch(`/api/tasks/open-task`)
+    return res;
+   
+}
 

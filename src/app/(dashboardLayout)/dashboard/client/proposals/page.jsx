@@ -56,7 +56,7 @@ const ManageProposals = async () => {
               <h2 className="text-lg font-bold text-black tracking-wide break-all">
                 {proposal?.taskTitle}
               </h2>
-              <span className={` ${proposal?.status === 'accepted' && 'bg-[#e6f7ed] border-[#d1f2e0] text-[#10b981]'} ${proposal?.status === 'rejected' && 'bg-[#ff0202]/7 text-[#ff0202] border-[#ff0202]/7'} capitalize text-xs font-semibold px-2.5 py-0.5 rounded-full border `}>
+              <span className={` ${proposal?.status === 'pending' && 'bg-[#ff6600dc]/10 border-[#ff6600dc] text-[#ff6600dc]'}  ${proposal?.status === 'completed' && 'bg-[#e6f7ed] border-[#d1f2e0] text-[#10b981]'} ${proposal?.status === 'rejected' && 'bg-[#ff0202]/7 text-[#ff0202] border-[#ff0202]/7'} capitalize text-xs font-semibold px-2.5 py-0.5 rounded-full border `}>
                 {proposal?.status}
               </span>
             </div>

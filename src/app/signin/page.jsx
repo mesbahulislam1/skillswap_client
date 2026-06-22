@@ -33,7 +33,7 @@ export default function LoginPage() {
       email: email, // required
       password: password, // required
     });
-    console.log({ data, error });
+
     const user = data?.user;
 
     if (user?.role === "client") {

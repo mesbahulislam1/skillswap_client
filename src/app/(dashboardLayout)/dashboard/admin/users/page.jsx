@@ -4,6 +4,7 @@ import { Button, Table } from "@heroui/react";
 import UserCard from "@/components/UserCard";
 
 
+
 export default async function UserManagementHeader({searchParams}) {
   
   const params = await searchParams;
@@ -54,6 +55,8 @@ const user = await getAllUsers(sParams.toString());
         </Table.ScrollContainer>
       </Table>
 
+      <div>
+      </div>
       
     </div>
   );

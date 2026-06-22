@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -122,6 +121,11 @@ export default function SidebarNavigation() {
   const menu = menus[user?.role || "client"];
   // const menu = menus.admin;
 
+  const handelLogout = async () => {
+      await authClient.signOut();
+      window.location.reload();
+    };
+
   return (
     <>
       {/* Mobile Topbar */}
@@ -239,7 +243,7 @@ export default function SidebarNavigation() {
 
         {/* Footer */}
         <div className="absolute bottom-0 left-0 w-full p-4 border-t bg-white">
-          <button className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition">
+          <button onClick={handelLogout} className="flex cursor-pointer items-center gap-3 w-full px-4 py-3 rounded-xl text-red-500 hover:bg-red-50 transition">
             <LogOut size={18} />
             Logout
           </button>
