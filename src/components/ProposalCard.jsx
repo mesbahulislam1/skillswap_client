@@ -1,82 +1,73 @@
-"use client"
-import { baseUrl } from '@/lib/baseUrl';
-import React, { useState } from 'react';
+"use client";
+import { baseUrl } from "@/lib/baseUrl";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
-const FreelancerProposalCard = ({task}) => {
-   
+const FreelancerProposalCard = ({ task }) => {
   // Simple state management to handle actions
- 
-
 
   const getTimeAgo = (date) => {
-  const diff = Date.now() - new Date(date).getTime();
+    const diff = Date.now() - new Date(date).getTime();
 
-  const minutes = Math.floor(diff / (1000 * 60));
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const minutes = Math.floor(diff / (1000 * 60));
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
 
-  if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
-  if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
-  if (minutes > 0) return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
+    if (days > 0) return `${days} day${days > 1 ? "s" : ""} ago`;
+    if (hours > 0) return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+    if (minutes > 0) return `${minutes} min${minutes > 1 ? "s" : ""} ago`;
 
-  return "Just now";
-};
+    return "Just now";
+  };
 
+  const [status, setStatus] = useState(task?.status || "pending");
 
+  const handleReject = () => {
+    setStatus("rejected");
+  };
 
+  const handleAccept = async () => {
+    try {
+      const res = await fetch(`${baseUrl}/api/proposals/${task?._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          status: "accepted",
+        }),
+      });
 
-const [status, setStatus] = useState(task?.status || "pending");
+      if (res.ok) {
+        setStatus("accepted");
+        window.location.reload();
+      }
+    } catch (error) {
+      console.log("ERROR:", error);
+    }
+  };
 
-const handleReject = () => {
-  setStatus("rejected");
-};
-
-const handleAccept = async () => {
-   
-
-  try {
-    const res = await fetch(`${baseUrl}/api/proposals/${task?._id}`, {
-      method: "PATCH",
+  const payments = async () => {
+    const priceData = {
+      proposedBudget: task?.proposedBudget,
+    };
+    if (priceData) {
+      handleAccept("accept");
+    }
+    const res = await fetch("/api/checkout_sessions", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        status: "accepted",
-      }),
+      body: JSON.stringify(priceData),
     });
-
-   
-
-    if (res.ok) {
-      setStatus("accepted");
-      window.location.reload()
+    const data = await res.json();
+    
+    
+    if (data?.url) {
+      window.location.href = data.url;
     }
-  } catch (error) {
-    console.log("ERROR:", error);
-  }
-};
-
-
-const payments= async()=>{
-
-  const priceData = {
-    proposedBudget: task?.proposedBudget,
-  }
-  const res = await fetch("/api/checkout_sessions", {
-    method: 'POST',
-    headers: {
-       "Content-Type": "application/json",
-    },
-    body: JSON.stringify(priceData)
-  })
-   const data = await res.json()
-   if (data?.url) {
-    window.location.href = data.url,
-    handleAccept('accept')
-   }
-  
-   
-}
+  };
 
   return (
     <div className="max-w-4xl mx-auto my-6 p-6 bg-white border border-gray-100 rounded-xl shadow-sm font-sans">
@@ -102,22 +93,24 @@ const payments= async()=>{
         </div>
 
         {/* Dynamic Status Badge */}
-        <span className={`${ task?.status === 'pending' && 'border-[#FE9C06] text-[#FE9C06]  bg-[#FE9C06]/9'} ${ task?.status === 'accepted' && 'border-[#01a74c] text-[#01a74c]  bg-[#01a74c]/9'}  ${ task?.status === 'rejected' && 'border-[#ff0000] text-[#ff0000]  bg-[#ff0000]/9'}  text-sm font-medium border capitalize rounded-full px-5 py-1`}>
-  {task?.status}
-</span>
+        <span
+          className={`${task?.status === "pending" && "border-[#FE9C06] text-[#FE9C06]  bg-[#FE9C06]/9"} ${task?.status === "accepted" && "border-[#01a74c] text-[#01a74c]  bg-[#01a74c]/9"}  ${task?.status === 'completed' && "border-[#01a74c] text-[#01a74c]  bg-[#01a74c]/9"} ${task?.status === "rejected" && "border-[#ff0000] text-[#ff0000]  bg-[#ff0000]/9"}  text-sm font-medium border capitalize rounded-full px-5 py-1`}
+        >
+          {task?.status}
+        </span>
       </div>
 
       {/* Second Row: Pricing and Date details */}
       <div className="flex gap-3 text-sm text-gray-500 mb-4 ml-7">
         <span>${task?.proposedBudget}</span>
-       <span>{getTimeAgo(task?.createdAt)}</span>
+        <span>{getTimeAgo(task?.createdAt)}</span>
         <span>
-  {new Date(task?.createdAt).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  })}
-</span>
+          {new Date(task?.createdAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}
+        </span>
       </div>
 
       {/* Third Row: Proposal Message Description */}
@@ -126,7 +119,7 @@ const payments= async()=>{
       </div>
 
       {/* Fourth Row: Action Buttons */}
-      {task?.status === 'pending' && (
+      {task?.status === "pending" && (
         <div className="flex gap-3 ml-7">
           <button
             onClick={payments}
@@ -140,7 +133,7 @@ const payments= async()=>{
           >
             Reject
           </button>
-        </div>   
+        </div>
       )}
     </div>
   );

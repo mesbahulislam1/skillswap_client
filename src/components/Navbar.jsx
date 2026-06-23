@@ -152,13 +152,13 @@ export function Navbar() {
             Home
           </Link>
           <Link
-            href="/courses"
+            href="/tasks"
             className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl"
           >
             Browse Tasks
           </Link>
           <Link
-            href="/add-course"
+            href="/freelancers"
             className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl"
           >
             Browse Freelancers
@@ -167,8 +167,12 @@ export function Navbar() {
             {user ? (
               <div>
                 <Link
-                  href="/dashboard/client"
-                  className="font-semibold mb-6 text-sm flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors"
+                  href={
+                    (user?.role == "client" && "/dashboard/client") ||
+                    (user?.role == "freelancer" && "/dashboard/freelancer") ||
+                    (user?.role == "admin" && "/dashboard/admin")
+                  }
+                  className="font-semibold text-sm flex items-center gap-2 text-slate-500 hover:text-slate-800 transition-colors"
                 >
                   <MdOutlineDashboard className="text-[18px]" />
                   Dashboard

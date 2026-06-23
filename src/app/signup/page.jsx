@@ -44,7 +44,7 @@ export default function SignupPage() {
         email,
         password,
         image,
-        role
+        role,
       };
     } else {
       register = {
@@ -65,15 +65,15 @@ export default function SignupPage() {
 
     console.log({ data, error });
     if (data) {
-      redirect('/signin')
+      redirect("/signin");
     }
   };
 
   const signIn = async () => {
-  const data = await authClient.signIn.social({
-    provider: "google",
-  });
-};
+    const data = await authClient.signIn.social({
+      provider: "google",
+    });
+  };
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 via-white to-slate-200 px-4">
       <Card className="w-full max-w-md shadow-2xl border border-gray-100 rounded-2xl">
@@ -139,7 +139,8 @@ export default function SignupPage() {
               </div>
             </div>
 
-            <Button onClick={signIn}
+            <Button
+              onClick={signIn}
               variant="outline"
               className={"w-full py-5 flex gap-2 rounded-[10px] mt-7 "}
             >
@@ -159,7 +160,7 @@ export default function SignupPage() {
 
           {/* FORM (SAFE VERSION) */}
           <Form onSubmit={handelSubmit} className="space-y-4">
-            <TextField  name="name" type="text">
+            <TextField name="name" type="text">
               <Label>Name</Label>
               <Input
                 placeholder="Enter your name"
@@ -178,7 +179,6 @@ export default function SignupPage() {
             </div>
 
             <TextField
-              
               name="email"
               type="email"
               validate={(value) => {
@@ -195,7 +195,7 @@ export default function SignupPage() {
               />
               <FieldError />
             </TextField>
-            <TextField  minLength={8} name="password" type="password">
+            <TextField minLength={8} name="password" type="password">
               <Label>Password</Label>
               <Input
                 placeholder="*******"
@@ -206,7 +206,7 @@ export default function SignupPage() {
 
             {role === "freelancer" && (
               <div className="">
-                <TextField  name="skill" type="text">
+                <TextField name="skill" type="text">
                   <Label>Skill</Label>
                   <Input
                     placeholder="React, Node.js ...."

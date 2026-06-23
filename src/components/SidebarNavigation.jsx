@@ -137,9 +137,9 @@ export default function SidebarNavigation() {
           <MdMenu size={24} />
         </button>
 
-        <h1 className="ml-3 text-xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
+        <Link href={'/'} className="ml-3 cursor-pointer text-xl font-bold bg-gradient-to-r from-cyan-600 to-blue-600 bg-clip-text text-transparent">
           TaskHive
-        </h1>
+        </Link>
       </header>
 
       {/* Overlay */}

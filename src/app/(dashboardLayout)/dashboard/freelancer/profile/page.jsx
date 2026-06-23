@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import { FaFacebook, FaGithub } from "react-icons/fa";
+import { EditProfile } from "./EditProfile";
 
 export default function ProfilePage() {
   const skills = [
@@ -51,7 +52,6 @@ export default function ProfilePage() {
   ];
 
   const { data: session } = authClient.useSession();
-
   const user = session?.user;
 
 
@@ -79,10 +79,8 @@ export default function ProfilePage() {
 
                 <p className="text-gray-500">{user?.role}</p>
 
-                <button className="flex items-center gap-2 mt-4 bg-black text-white px-5 py-2 rounded-xl hover:bg-gray-800 transition">
-                  <Edit size={18} />
-                  Edit Profile
-                </button>
+                
+                <EditProfile user={user}></EditProfile>
               </div>
 
               <div className="border-t my-6" />

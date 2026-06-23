@@ -1,10 +1,12 @@
-import { getFreelancerUser } from "@/lib/api/user/session";
+import { baseUrl } from "@/lib/baseUrl";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const BrowseFreelancers = async () => {
-  const FreelancerUser = await getFreelancerUser();
+  const res = await fetch(`${baseUrl}/api/freelancers`);
+  const FreelancerUser = await res.json()
+  
 
   return (
     <div className="max-w-7xl mx-auto px-6 py-10 font-sans">

@@ -2,8 +2,9 @@ import React from "react";
 import { Users, Briefcase, DollarSign, Activity } from "lucide-react";
 
 import { TotalTasks } from "@/lib/api/tasks/data";
-import { AllUsers } from "@/lib/api/user/session";
+import { adminLength, AllUsers, clientLength, freelancerLength } from "@/lib/api/user/session";
 import { stripe } from "@/lib/stripe";
+import Chart from "./Chart";
 
 const MetricCard = ({ title, value, subtext, icon: Icon }) => {
   return (
@@ -29,7 +30,7 @@ export default async function AdminDashboard() {
   const users = await AllUsers();
   const tasks = await TotalTasks();
 
-  // ✅ Stripe data ONLY ONCE
+
   const sessions = await stripe.checkout.sessions.list({ limit: 100 });
 
   const totalRevenue =
@@ -65,6 +66,10 @@ export default async function AdminDashboard() {
     },
   ];
 
+  const adminNum = await adminLength()
+  const freelancerNum = await freelancerLength()
+  const clientNum = await clientLength()
+
   return (
     <div className="w-full max-w-7xl mx-auto p-8 bg-gray-50/50 min-h-screen font-sans">
       <div className="mb-8">
@@ -80,6 +85,10 @@ export default async function AdminDashboard() {
         {metrics.map((metric, index) => (
           <MetricCard key={index} {...metric} />
         ))}
+      </div>
+
+      <div>
+        <Chart adminNum={adminNum} freelancerNum={freelancerNum} clientNum={clientNum}></Chart>
       </div>
     </div>
   );

@@ -52,7 +52,7 @@ const MyProposals = async () => {
             {/* Right Side Status Badge */}
             <div>
               <span
-                className={`capitalize ${proposal?.status === "pending" && "bg-yellow-600/12 text-yellow-600 border-yellow-400"} ${proposal?.status === "rejected" && "bg-red-600/10 text-red-400 border-red-500"}  ${proposal?.status === "accepted" && "bg-green-600/10 text-green-400 border-green-500"}  border text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap`}
+                className={`capitalize ${proposal?.status === "pending" && "bg-yellow-600/12 text-yellow-600 border-yellow-400"} ${proposal?.status === "accepted" && "bg-[#0092B8]/10 text-[#0092B8] border-[#0092B8]"} ${proposal?.status === "completed" && "bg-green-600/10 text-green-400 border-green-500"}  border text-xs font-medium px-3 py-1 rounded-full whitespace-nowrap`}
               >
                 {proposal?.status}
               </span>

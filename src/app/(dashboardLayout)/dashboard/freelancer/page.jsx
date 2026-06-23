@@ -2,8 +2,13 @@ import React from "react";
 import { FaSearch } from "react-icons/fa";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import { getProposol, getProposolPending } from "@/lib/api/proposal/data";
+import { getUser } from "@/lib/api/user/session";
 
-const FreelancerDashboard = () => {
+const FreelancerDashboard = async() => {
+  const user = await getUser()
+  const proposol = await getProposol(user?.email)
+  const proposolPending = await getProposolPending(user?.email)
   return (
     <div className="max-w-5xl mx-auto p-6 font-sans text-[#1a1a1a]">
       {/* Header */}
@@ -26,10 +31,10 @@ const FreelancerDashboard = () => {
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-        <Card title="Total Tasks" value={0} desc="All tasks created" />
-        <Card title="Open Tasks" value="0" desc="Awaiting proposals" />
-        <Card title="In Progress" value="0" desc="Currently being worked on" />
-        <Card title="Total Spent" value="$0" desc="Total money paid" />
+        <Card title="Total Proposals" value={proposol?.length} desc="All tasks created" />
+        <Card title="Pending" value={proposolPending?.length} desc="Awaiting proposals" />
+        <Card title="Accepted" value="0" desc="Currently being worked on" />
+        <Card title="Total Earned" value="$0" desc="Total money paid" />
       </div>
 
       {/* Recent Tasks */}

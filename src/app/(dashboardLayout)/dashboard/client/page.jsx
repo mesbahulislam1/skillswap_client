@@ -2,41 +2,63 @@
 
 import TaskCard from "@/components/TaskCard";
 import { authClient } from "@/lib/auth-client";
+import { baseUrl } from "@/lib/baseUrl";
 import { ListTodo, Plus } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function ClientDashboard() {
-  const { 
-        data: session, 
-        isPending, //loading state
-        error, //error object
-        refetch //refetch the session
-    } = authClient.useSession()
-    const user = session?.user; 
-
+  const {
+    data: session,
+    isPending, //loading state
+    error, //error object
+    refetch, //refetch the session
+  } = authClient.useSession();
+  const user = session?.user;
 
   const [tasksData, setTasksData] = useState([]);
-  const getTasks = async () => {
-      const res = await fetch(`http://localhost:8080/api/tasks/total/${user?.email}`);
-      return res.json();
-    };
+  const [taskInprocess, setTaskInprocess] = useState([]);
+  const [taskOpen, setTaskOpen] = useState([]);
   
-    useEffect(() => {
-  if (!user?.email) return;
-
-  const loadTasks = async () => {
+  const getTasks = async () => {
     const res = await fetch(
-      `http://localhost:8080/api/tasks/total/${user.email}`
+      `http://localhost:8080/api/tasks/total/${user?.email}`,
     );
-    const data = await res.json();
-    setTasksData(data);
+    return res.json();
   };
 
-  loadTasks();
-}, [user?.email]);
+  useEffect(()=>{
+    const totalTaskOpen = async()=>{
+      const res = await fetch(`${baseUrl}/api/openTasks?email=${user?.email}`)
+      const data = await res.json()
+      setTaskOpen(data)
+    }
+    totalTaskOpen()
+  }, [user?.email])
 
- 
+  useEffect(()=>{
+    const totalInProgress = async()=>{
+      const res = await fetch(`${baseUrl}/api/openTasks?email=${user?.email}`)
+      const data = await res.json()
+      setTaskInprocess(data)
+    }
+    totalInProgress()
+  }, [user?.email])
+
+
+
+  useEffect(() => {
+    if (!user?.email) return;
+
+    const loadTasks = async () => {
+      const res = await fetch(`${baseUrl}/api/tasks/total/${user.email}`);
+      const data = await res.json();
+      setTasksData(data);
+    };
+
+    loadTasks();
+  }, [user?.email]);
+
   return (
     <div className="max-w-5xl mx-auto p-6 font-sans text-[#1a1a1a]">
       {/* Header */}
@@ -61,38 +83,40 @@ export default function ClientDashboard() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-        <Card title="Total Tasks" value={tasksData?.length} desc="All tasks created" />
-        <Card title="Open Tasks" value="0" desc="Awaiting proposals" />
-        <Card title="In Progress" value="0" desc="Currently being worked on" />
+        <Card
+          title="Total Tasks"
+          value={tasksData?.length}
+          desc="All tasks created"
+        />
+        <Card title="Open Tasks" value={taskOpen?.length} desc="Awaiting proposals" />
+        <Card title="In Progress" value={taskInprocess?.length} desc="Currently being worked on" />
         <Card title="Total Spent" value="$0" desc="Total money paid" />
       </div>
 
       {/* Recent Tasks */}
       <h2 className="text-lg font-semibold mb-4">Recent Tasks</h2>
-      {
-        tasksData ? <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {
-          tasksData.slice(0,2).map(task=>  {
-            return <TaskCard task={task} key={task?._id}></TaskCard>
-          })
-        }
-      </div> : <div className="border border-dashed border-[#e4e4e7] rounded-2xl p-12 text-center">
-        <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#f4f4f5] flex items-center justify-center">
-          📋
+      {tasksData ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {tasksData.slice(0, 2).map((task) => {
+            return <TaskCard task={task} key={task?._id}></TaskCard>;
+          })}
         </div>
+      ) : (
+        <div className="border border-dashed border-[#e4e4e7] rounded-2xl p-12 text-center">
+          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#f4f4f5] flex items-center justify-center">
+            📋
+          </div>
 
-        <h3 className="text-lg font-semibold mb-1">No tasks yet</h3>
-        <p className="text-sm text-[#71717a] mb-5">
-          Post your first task to find talented freelancers
-        </p>
+          <h3 className="text-lg font-semibold mb-1">No tasks yet</h3>
+          <p className="text-sm text-[#71717a] mb-5">
+            Post your first task to find talented freelancers
+          </p>
 
-        <button className="bg-[#d97706] text-white px-5 py-2 rounded-xl text-sm hover:bg-[#b45309]">
-          Post a Task
-        </button>
-      </div> 
-      
-        
-      }
+          <button className="bg-[#d97706] text-white px-5 py-2 rounded-xl text-sm hover:bg-[#b45309]">
+            Post a Task
+          </button>
+        </div>
+      )}
     </div>
   );
 }

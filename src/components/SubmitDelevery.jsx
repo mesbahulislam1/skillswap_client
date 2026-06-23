@@ -24,9 +24,9 @@ export function WitSubmitDelevery({user, project}) {
         body: JSON.stringify({taskId: project?.taskId,
       deliverableUrl: deliverableUrl,}),
     })
-    const dat = await res.json()
+    const dat = await res.text()
     if(dat){
-      toast.success("deliverableUrl Sent succesful")
+      toast.success("Deliverable URL sent successfully");
       window.location.reload()
     }
   };

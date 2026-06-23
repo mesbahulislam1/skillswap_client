@@ -23,7 +23,7 @@ const TaskDetailsPage = async({params}) => {
 //   };
 
   const task = await getTasksOne(id)
-  
+
   const res = await fetch(`${baseUrl}/api/proposals/${task?._id}`)
   const taskData = await res.json()
   
