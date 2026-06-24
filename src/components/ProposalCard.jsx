@@ -52,7 +52,7 @@ const FreelancerProposalCard = ({ task }) => {
       proposedBudget: task?.proposedBudget,
     };
     if (priceData) {
-      handleAccept("accept");
+     await handleAccept("accept");
     }
     const res = await fetch("/api/checkout_sessions", {
       method: "POST",

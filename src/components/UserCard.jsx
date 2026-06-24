@@ -38,7 +38,7 @@ const UserCard = ({ usr }) => {
       <Table.Cell>
         <div className="flex gap-1 items-center">
           <Image
-            src={usr?.image}
+            src={usr?.image || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
             width={50}
             height={50}
             className="rounded-full object-cover h-[50px] w-[50px]"

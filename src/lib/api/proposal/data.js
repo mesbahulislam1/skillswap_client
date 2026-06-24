@@ -1,6 +1,4 @@
 import { baseUrl } from "@/lib/baseUrl";
-import { serverFetch } from "../server/server";
-
 
 
 export const getProposol = async (email) => {

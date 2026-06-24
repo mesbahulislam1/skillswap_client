@@ -5,6 +5,7 @@ export const serverMutation = async (path, method, data) => {
     method: method,
     headers: {
       "content-type": "application/json",
+      
     },
     body: JSON.stringify(data),
   });

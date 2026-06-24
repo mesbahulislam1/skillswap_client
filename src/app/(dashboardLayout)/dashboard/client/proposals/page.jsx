@@ -1,7 +1,10 @@
 import React from "react";
 import { DollarSign, Clock, Calendar } from "lucide-react"; // Optional: Use any icon library you prefer
 import { getManageProposol } from "@/lib/api/proposal/data";
-import { getUser } from "@/lib/api/user/session";
+
+
+
+
 
 const ManageProposals = async () => {
   // Mock data based on your screenshot

@@ -54,7 +54,7 @@ const BrowseFreelancers = async () => {
               {/* Avatar + Name */}
               <div className="flex items-center gap-4 mb-4">
                 <Image
-                  src={freelancer?.image}
+                  src={freelancer?.image || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
                   width={80}
                   height={80}
                   alt={freelancer?.name || "Freelancer"}

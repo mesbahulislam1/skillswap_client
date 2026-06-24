@@ -1,7 +1,4 @@
 import React from "react";
-import { FaSearch } from "react-icons/fa";
-import Link from "next/link";
-import { Plus } from "lucide-react";
 import { getProposol, getProposolPending } from "@/lib/api/proposal/data";
 import { getUser } from "@/lib/api/user/session";
 
@@ -20,13 +17,7 @@ const FreelancerDashboard = async() => {
           </p>
         </div>
 
-        <Link
-          href={"/dashboard/client/tasks/new"}
-          className="bg-[#2ea6bb] text-white flex items-center gap-1 rounded-full font-medium cursor-pointer text-[13px] px-5 py-1 h-fit"
-        >
-          <Plus size={18} />
-          Post New Task
-        </Link>
+        
       </div>
 
       {/* Stats */}

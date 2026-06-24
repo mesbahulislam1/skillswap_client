@@ -1,6 +1,5 @@
 "use client";
 
-import { uploadImage } from "@/app/utils/uploadImage";
 import { baseUrl } from "@/lib/baseUrl";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { Edit } from "lucide-react";
@@ -36,9 +35,7 @@ export function EditProfile({ user }) {
 
   const updateData = await res.json();
 
-  if (updateData) {
-    window.location.reload();
-  }
+  console.log(updateData)
 };
 
 
